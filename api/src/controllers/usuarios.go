@@ -6,6 +6,7 @@ import (
 	"api/src/models"
 	"api/src/repository"
 	"api/src/respostas"
+	"api/src/security"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -313,6 +314,77 @@ func BuscarSeguindo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	respostas.JSON(w, http.StatusOK, usuarios)
+}
+
+func AtualizarSenha(w http.ResponseWriter, r *http.Request) {
+	param := mux.Vars(r)
+
+	idUsuario, erro := strconv.ParseUint(param["id"], 10, 64)
+
+	if erro != nil {
+		respostas.Erro(w, http.StatusBadRequest, erro)
+		return
+	}
+
+	var resp = validaUsuarioToken(w, r, idUsuario)
+	if !resp {
+		return
+	}
+
+	body, erro := io.ReadAll(r.Body)
+
+	if erro != nil {
+		respostas.Erro(w, http.StatusUnprocessableEntity, erro)
+		return
+	}
+
+	var senha models.Senha
+	if erro = json.Unmarshal(body, &senha); erro != nil {
+		respostas.Erro(w, http.StatusBadRequest, erro)
+		return
+	}
+
+	if senha.Atual == "" {
+		respostas.Erro(w, http.StatusBadRequest, respostas.MsgError("Senha atual precisa ser informada"))
+		return
+	}
+
+	if senha.Nova == "" {
+		respostas.Erro(w, http.StatusBadRequest, respostas.MsgError("Senha nova precisa ser informada"))
+		return
+	}
+
+	db, erro := db.Connect()
+	if erro != nil {
+		respostas.Erro(w, http.StatusInternalServerError, erro)
+		return
+	}
+
+	rep := repository.NovoRepositoryUsuario(db)
+	senhaUsuario, erro := rep.BuscarSenha(idUsuario)
+
+	if erro != nil {
+		respostas.Erro(w, http.StatusInternalServerError, erro)
+		return
+	}
+
+	if erro = security.VerifyPassword(senhaUsuario, senha.Atual); erro != nil {
+		respostas.Erro(w, http.StatusUnauthorized, respostas.MsgError("Senha atual incorreta"))
+		return
+	}
+
+	senhaCryto, erro := security.Hash(senha.Nova)
+	if erro != nil {
+		respostas.Erro(w, http.StatusBadRequest, erro)
+		return
+	}
+
+	if erro = rep.AtualizarSenha(idUsuario, string(senhaCryto)); erro != nil {
+		respostas.Erro(w, http.StatusInternalServerError, erro)
+		return
+	}
+
+	respostas.JSON(w, http.StatusNoContent, nil)
 }
 
 func validaUsuarioToken(w http.ResponseWriter, r *http.Request, usuarioId uint64) bool {

@@ -246,3 +246,37 @@ func (contextUsuario ContextUsuario) BuscarSeguindo(idSeguidor uint64) ([]models
 	}
 	return usuarios, nil
 }
+
+func (contextUsuario *ContextUsuario) BuscarSenha(idUsuario uint64) (senha string, erro error) {
+
+	result, erro := contextUsuario.db.Query("select Senha from usuario where id = ?", idUsuario)
+
+	if erro != nil {
+		return "", erro
+	}
+
+	defer result.Close()
+
+	if result.Next() {
+		if erro = result.Scan(&senha); erro != nil {
+			return "", erro
+		}
+	}
+	return senha, nil
+}
+
+func (contextUsuario ContextUsuario) AtualizarSenha(idUsuario uint64, senha string) error {
+	statement, erro := contextUsuario.db.Prepare("update usuario set Senha = ?  where Id = ?")
+
+	if erro != nil {
+		return erro
+	}
+
+	defer statement.Close()
+
+	if _, erro := statement.Exec(senha, idUsuario); erro != nil {
+		return erro
+	}
+
+	return nil
+}

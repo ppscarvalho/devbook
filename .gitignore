@@ -1,0 +1,58 @@
+# Exclui arquivos binários gerados pelo Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Exclui diretórios específicos do Go
+/vendor/
+
+# Exclui caches e dependências
+*.mod
+*.sum
+
+# Exclui dados temporários e compilados
+*.log
+*.tmp
+*.cache
+*.db
+*.sqlite
+*.sqlite3
+*.lock
+
+# Editor e IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testes de cobertura
+*.coverprofile
+*.coverage
+*.cov
+*.test
+
+# Docker e Configurações Locais
+Dockerfile*
+.env
+.env.*
+
+# Outros arquivos e logs
+*.bak
+*.old
+
+# Logs do sistema
+*.log
+*.log.*
+log/
+
+# Arquivos gerados pelo sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos específicos do Go
+/bin/
+/pkg/

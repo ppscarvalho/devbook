@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS seguidores;
+DROP TABLE IF EXISTS usuario;

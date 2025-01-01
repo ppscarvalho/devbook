@@ -2,7 +2,7 @@ package models
 
 import "time"
 
-type Publciacao struct {
+type Publicacao struct {
 	Id         uint64    `json:"id,omitempty"`
 	Titulo     string    `json:"titulo,omitempty"`
 	Conteudo   string    `json:"conteudo,omitempty"`

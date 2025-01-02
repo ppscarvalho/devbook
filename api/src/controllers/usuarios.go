@@ -68,7 +68,7 @@ func BuscarUsuarios(w http.ResponseWriter, r *http.Request) {
 	usuarios, erro := rep.Buscar(params)
 
 	if erro != nil {
-		respostas.Erro(w, http.StatusInternalServerError, erro)
+		respostas.JSON(w, http.StatusInternalServerError, erro)
 		return
 	}
 

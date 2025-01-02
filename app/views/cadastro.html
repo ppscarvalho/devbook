@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevBook - Cadastro de Usuário</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="/assets/js/jquery-3.7.1.min.js"></script> <!-- Adicionando o script para validar o formulário -->
+    <script src="/assets/devbook/cadastro.js"></script> <!-- Adicionando o script para validar o formulário -->
+</head>
+
+<body>
+    <div class="container-login">
+        <div>
+            <form class="devbook-form" id="formulario-cadastro" method="post"
+                enctype="application/x-www-form-urlencoded">
+                <span>Crie a sua conta no DevBook</span>
+                <div>
+                    <input type="text" name="nome" id="nome" placeholder="Digite seu nome" required>
+                </div>
+                <div>
+                    <input type="email" name="email" id="email" placeholder="Digite seu e-mail" required>
+                </div>
+                <div>
+                    <input type="text" name="nick" id="nick" placeholder="Digite seu nick" required>
+                </div>
+                <div>
+                    <input type="password" name="senha" id="senha" placeholder="Digite sua senha" required>
+                </div>
+                <div>
+                    <input type="password" name="confirmer-senha" id="confirmer-senha" placeholder="Confirme sua senha"
+                        required>
+                </div>
+
+                <a href="/login">Clique aqui para fazer login?</a>
+
+                <button type="submit" class="btn-devbook" id="btn-cadastrar">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+
+</html>

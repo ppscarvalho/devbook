@@ -10,6 +10,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"strconv"
 )
 
 // Implementar o login do usuário
@@ -53,7 +54,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response := `{"token": "` + token + `"}`
-
-	w.Write([]byte(response))
+	idUsuario := strconv.FormatUint(usuarioModel.Id, 10)
+	respostas.JSON(w, http.StatusOK, models.DadosAutenticacao{Id: idUsuario, Token: token})
 }

@@ -4,11 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Login da Aplicação</title>
+    <title>DevBook - Login</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="/assets/js/jquery-3.7.1.min.js"></script> <!-- Adicionando o script para validar o formulário -->
+    <script src="/assets/devbook/login.js"></script> <!-- Adicionando o script para validar o formulário -->
 </head>
 
 <body>
-    <h2>Tela de Login</h2>
+    <div class="container-login">
+        <div>
+            <form class="devbook-form" id="login" method="post" enctype="application/x-www-form-urlencoded">
+                <span>Seja bem vindo ao DevBook</span>
+                <div>
+                    <input type="email" name="email" id="email" placeholder="Digite seu e-mail" required>
+                </div>
+                <div>
+                    <input type="password" name="senha" id="senha" placeholder="Digite sua senha" required>
+                </div>
+
+                <a href="/cadastrar-usuario">Clique aqui para cirar sua conta?</a>
+
+                <button type="submit" class="btn-devbook">Entrar</button>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>

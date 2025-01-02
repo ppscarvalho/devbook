@@ -18,4 +18,10 @@ var routerLogin = []Router{
 		Funcao:             controllers.CarregarTelaLogin,
 		RequerAutenticacao: false,
 	},
+	{
+		Uri:                "/login",
+		Metodo:             http.MethodPost,
+		Funcao:             controllers.FazerLogin,
+		RequerAutenticacao: false,
+	},
 }

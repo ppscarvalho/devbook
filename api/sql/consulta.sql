@@ -12,3 +12,4 @@ from usuario u inner join seguidores s
 on u.Id = s.IdUsuario
 where s.IdSeguidor = 1;
 
+select * from publicacao;

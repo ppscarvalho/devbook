@@ -4,10 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"net/http"
-	"webapp/config"
-	"webapp/respostas"
+	"webapp/src/config"
 	"webapp/src/cookies"
 	"webapp/src/models"
+	"webapp/src/respostas"
 )
 
 // Implementar a lógica para fazer o login do usuário

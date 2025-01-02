@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"webapp/config"
+	"webapp/src/config"
 	"webapp/src/cookies"
 	"webapp/src/router"
 	"webapp/src/utils"

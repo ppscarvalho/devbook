@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"net/http"
-	"webapp/config"
-	"webapp/respostas"
+	"webapp/src/config"
+	"webapp/src/respostas"
 )
 
 func CadastrarUsuario(w http.ResponseWriter, r *http.Request) {

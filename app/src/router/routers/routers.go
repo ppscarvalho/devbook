@@ -16,9 +16,14 @@ type Router struct {
 
 func Configurar(router *mux.Router) *mux.Router {
 	rotas := routerLogin
+	rotas = append(rotas, routerUsuarios...)
+	rotas = append(rotas, rotaHome)
 
 	for _, rota := range rotas {
 		router.HandleFunc(rota.Uri, rota.Funcao).Methods(rota.Metodo)
+
+		fileServer := http.FileServer(http.Dir("./assets/"))
+		router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", fileServer))
 
 		// if rota.RequerAutenticacao {
 		// 	router.HandleFunc(rota.Uri,

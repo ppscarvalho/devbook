@@ -10,6 +10,7 @@ var templates *template.Template
 // LoadTemplates carrega os templates
 func LoadTemplates() {
 	templates = template.Must(template.ParseGlob("views/*.html"))
+	templates = template.Must(templates.ParseGlob("views/templates/*.html"))
 }
 
 // RenderTemplate renderiza um template

@@ -28,27 +28,11 @@ function fazerLogin(event) {
 }
 
 function CarregarDados() {
-/*
-$("#email").val("nazareno@gmail.com");
-*/
-/*
-$("#email").val("thiago@gmail.com");
-*/
-/*
-$("#email").val("gael@gmail.com");
-*/
-/*
-$("#email").val("murilo@gmail.com");
-*/
 
-$("#email").val("oliver@gmail.com");
-
-/*
-$("#email").val("joao@gmail.com");
-*/
-
-/*
-$("#email").val("augusto@gmail.com");
-*/
+//$("#email").val("nazareno@gmail.com");
+$("#email").val("bento@gmail.com");
+//$("#email").val("gael@gmail.com");
+//$("#email").val("murilo@gmail.com");
+//$("#email").val("oliver@gmail.com");
 $("#senha").val("plutao");
 }

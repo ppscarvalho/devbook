@@ -3,10 +3,14 @@ package controllers
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"strconv"
 	"webapp/src/config"
 	"webapp/src/requisicoes"
 	"webapp/src/respostas"
+
+	"github.com/gorilla/mux"
 )
 
 func CriarPublicacao(w http.ResponseWriter, r *http.Request) {
@@ -38,6 +42,79 @@ func CriarPublicacao(w http.ResponseWriter, r *http.Request) {
 	respostas.JSONInterface(w, response.StatusCode, nil)
 }
 
-func BuscarPublicacoes(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Buscar publicacoes"))
+// CurtirPublicacao is a controller that likes a publication
+func CurtirPublicacao(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+
+	idPublicacao, erro := strconv.ParseUint(params["idPublicacao"], 10, 64)
+	if erro != nil {
+		respostas.JSONInterface(w, http.StatusBadRequest, respostas.ErroApi{Erro: erro.Error()})
+		return
+	}
+
+	url := fmt.Sprintf("%s/%d/curtir", config.EndPoint("publicacoes"), idPublicacao)
+	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPost, url, nil)
+
+	if erro != nil {
+		respostas.JSONInterface(w, http.StatusInternalServerError, respostas.ErroApi{Erro: erro.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		respostas.Mensagem(w, response)
+		return
+	}
+	respostas.JSONInterface(w, response.StatusCode, nil)
+}
+
+// DesCurtirPublicacao is a controller that unlikes a publication
+func DesCurtirPublicacao(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+
+	idPublicacao, erro := strconv.ParseUint(params["idPublicacao"], 10, 64)
+	if erro != nil {
+		respostas.JSONInterface(w, http.StatusBadRequest, respostas.ErroApi{Erro: erro.Error()})
+		return
+	}
+
+	url := fmt.Sprintf("%s/%d/descurtir", config.EndPoint("publicacoes"), idPublicacao)
+	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPost, url, nil)
+
+	if erro != nil {
+		respostas.JSONInterface(w, http.StatusInternalServerError, respostas.ErroApi{Erro: erro.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		respostas.Mensagem(w, response)
+		return
+	}
+	respostas.JSONInterface(w, response.StatusCode, nil)
+}
+
+func EditarPublicacao(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+
+	idPublicacao, erro := strconv.ParseUint(params["idPublicacao"], 10, 64)
+	if erro != nil {
+		respostas.JSONInterface(w, http.StatusBadRequest, respostas.ErroApi{Erro: erro.Error()})
+		return
+	}
+
+	url := fmt.Sprintf("%s/%d", config.EndPoint("publicacoes"), idPublicacao)
+	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
+
+	if erro != nil {
+		respostas.JSONInterface(w, http.StatusInternalServerError, respostas.ErroApi{Erro: erro.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		respostas.Mensagem(w, response)
+		return
+	}
+	respostas.JSONInterface(w, response.StatusCode, nil)
 }

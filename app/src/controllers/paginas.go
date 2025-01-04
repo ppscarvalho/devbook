@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"webapp/src/config"
@@ -10,6 +11,8 @@ import (
 	"webapp/src/requisicoes"
 	"webapp/src/respostas"
 	"webapp/src/utils"
+
+	"github.com/gorilla/mux"
 )
 
 // CarregarTelaLogin carrega a tela de login
@@ -53,4 +56,36 @@ func CarregarPaginaPrincipal(w http.ResponseWriter, r *http.Request) {
 		Publicacoes: publicacoes,
 		IdUsuario:   idUsuario,
 	})
+}
+
+func CarregarPaginaDeEdicaoPublicacao(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	idPublicacao, erro := strconv.ParseUint(params["idPublicacao"], 10, 64)
+
+	if erro != nil {
+		respostas.JSONInterface(w, http.StatusBadRequest, respostas.ErroApi{Erro: erro.Error()})
+		return
+	}
+
+	url := fmt.Sprintf("%s/%d", config.EndPoint("publicacoes"), idPublicacao)
+	response, erro := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
+
+	if erro != nil {
+		respostas.JSONInterface(w, http.StatusInternalServerError, respostas.ErroApi{Erro: erro.Error()})
+		return
+	}
+
+	if response.StatusCode >= 400 {
+		respostas.Mensagem(w, response)
+		return
+	}
+
+	var publicacao models.Publicacao
+
+	if erro = json.NewDecoder(response.Body).Decode(&publicacao); erro != nil {
+		respostas.JSONInterface(w, http.StatusUnprocessableEntity, respostas.ErroApi{Erro: erro.Error()})
+		return
+	}
+
+	utils.RenderTemplate(w, "atualizar-publicacao.html", publicacao)
 }

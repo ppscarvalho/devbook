@@ -48,5 +48,5 @@ func FazerLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respostas.JSONInterface(w, http.StatusOK, nil)
+	respostas.JSONInterface(w, response.StatusCode, response.Body)
 }

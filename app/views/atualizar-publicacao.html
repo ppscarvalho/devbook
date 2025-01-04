@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevBook - Editar Publicação - {{ .Titulo }}</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    {{ template "script" }}
+</head>
+
+<body>
+    {{ template "cabecalho" }}
+
+    <div class="container-fluid">
+        <div class="row mt-4">
+            <div class="col-12">
+                <!--Formulário-->
+                <h3>Atualizar Publicação</h3>
+                <fieldset>
+                    <form id="atualizar-publicacao" method="put" enctype="application/x-www-form-urlencoded">
+                        <div class="form-group">
+                            <label for="id">Id</label>
+                            <input type="text" class="form-control" id="id" value="{{ .Id }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="titulo">Titulo</label>
+                            <input type="text" class="form-control" name="titulo" id="titulo"
+                                placeholder="Digite o titulo" value="{{ .Titulo }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="conteudo">Conteúdo</label>
+                            <textarea class="form-control resize-none" name="conteudo" id="conteudo" rows="3"
+                                placeholder="Digite o conteudo" required>{{ .Conteudo }}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Atulizar Publicação</button>
+                    </form>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    {{ template "rodape" }}
+</body>
+
+</html>

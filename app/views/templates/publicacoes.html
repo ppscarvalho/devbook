@@ -1,0 +1,46 @@
+{{ define "curtidas" }}
+<i class="fa-solid fa-heart curtir-publicacao" style="cursor: pointer"></i>
+<span class="contador-curtidas">{{ .Curtidas }}</span>
+{{end }}
+
+{{ define "editar" }}
+<a href="/publicacoes/{{ .Id }}/editar" style="text-deconration: none;">
+<i class="fa-solid fa-edit"></i>
+</a>
+{{ end}}
+
+{{ define "deletar" }}
+<a href="/publicacoes/{{ .Id }}/deletar" style="text-deconration: none;">
+<i class="fa-solid fa-trash text-danger"></i>
+</a>
+{{ end}}
+
+{{ define "cabecalho-publicacao" }}
+<h1 class="display-4">{{ .Titulo }}</h1>
+<p class="lead">{{ .Conteudo }}</p>
+<a href="#">{{ .AutorNick }} - {{ .CriadoEm.Format "02/01/2006 03:04:05" }}</a>
+<hr class="my-4">
+<!--
+    Jan 2 15:04:05 2006
+    1 2 3 4 5 6
+-->
+{{ end }}
+
+{{ define "publicacao-com-permissao"}}
+<div class="jumbotron" data-publicacao-id="{{ .Id }}" data-autor-id="{{ .AutorId }}">
+    <div class="autorId" id="{{ .AutorId }}"></div>    
+    {{ template "cabecalho-publicacao" . }}
+    <p>
+        {{ template "curtidas" . }}
+        {{ template "editar" . }}
+        {{ template "deletar" . }}
+    </p>
+</div>
+{{ end }}
+
+{{ define "publicacao-sem-permissao"}}
+<div class="jumbotron" data-publicacao-id="{{ .Id }}">
+    {{ template "cabecalho-publicacao" . }}
+    <p>{{ template "curtidas" . }}</p>    
+</div>
+{{ end }}

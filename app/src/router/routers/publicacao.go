@@ -12,4 +12,22 @@ var routerPublicacoes = []Router{
 		Funcao:             controllers.CriarPublicacao,
 		RequerAutenticacao: true,
 	},
+	{
+		Uri:                "/publicacoes/{idPublicacao}/curtir",
+		Metodo:             http.MethodPost,
+		Funcao:             controllers.CurtirPublicacao,
+		RequerAutenticacao: true,
+	},
+	{
+		Uri:                "/publicacoes/{idPublicacao}/descurtir",
+		Metodo:             http.MethodPost,
+		Funcao:             controllers.DesCurtirPublicacao,
+		RequerAutenticacao: true,
+	},
+	{
+		Uri:                "/publicacoes/{idPublicacao}/editar",
+		Metodo:             http.MethodGet,
+		Funcao:             controllers.CarregarPaginaDeEdicaoPublicacao,
+		RequerAutenticacao: true,
+	},
 }

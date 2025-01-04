@@ -18,12 +18,11 @@ function fazerLogin(event) {
             email: usuario.email,
             senha: usuario.senha
         }
-    }).done(function(data) {
-        console.log(data);
+    }).done(function() {
         window.location.href = "/home";
     }).fail(function(err) {
         console.log(err);
-        alert("Erro ao realizar cadastro!");
+        alert("Erro ao realizar login!");
     });
 }
 

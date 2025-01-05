@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    CarregarDados();
     $("#login").on('submit', fazerLogin);
 });
 
@@ -24,14 +23,4 @@ function fazerLogin(event) {
         console.log(err);
         Mensagem("Erro ao realizar login!", "error");
     });
-}
-
-function CarregarDados() {
-
-$("#email").val("nazareno@gmail.com");
-//$("#email").val("otavio@gmail.com");
-//$("#email").val("gael@gmail.com");
-//$("#email").val("murilo@gmail.com");
-//$("#email").val("oliver@gmail.com");
-$("#senha").val("plutao");
 }

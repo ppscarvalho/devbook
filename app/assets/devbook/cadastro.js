@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    CarregarDados();
     $("#formulario-cadastro").on('submit', CriarUsuario);
 });
 
@@ -55,58 +54,4 @@ function CriarUsuario(event) {
         console.log(err);
         Mensagem("Erro ao realizar cadastro!", "error");
     });
-}
-
-function CarregarDados() {
-/*
-
-$("#nome").val("Nazareno Caio Geraldo Campos");
-$("#email").val("nazareno@gmail.com");
-$("#nick").val("caio");
-*/
-/*
-$("#nome").val("Bento Thiago Gabriel da Cruz");
-$("#email").val("thiago@gmail.com");
-$("#nick").val("thiago");
-*/
-/*
-$("#nome").val("Gael Diego Pietro Jesus");
-$("#email").val("gael@gmail.com");
-$("#nick").val("gael");
-*/
-/*
-$("#nome").val("Murilo Carlos Enzo Duarte");
-$("#email").val("murilo@gmail.com");
-$("#nick").val("murilo");
-*/
-
-/*
-$("#nome").val("Oliver Lucca Lopes");
-$("#email").val("oliver@gmail.com");
-$("#nick").val("oliver");
-*/
-/*
-$("#nome").val("João da Silva");
-$("#email").val("joao@gmail.com");
-$("#nick").val("joao");
-*/
-
-/*
-$("#nome").val("Augusto Ferreira Nunes");
-$("#email").val("augusto@gmail.com");
-$("#nick").val("augusto");
-*/
-
-/*
-$("#nome").val("Carlos Pereira");
-$("#email").val("carlos@gmail.com");
-$("#nick").val("carlos");
-*/
-
-$("#nome").val("Otávio de Souza");
-$("#email").val("otavio@gmail.com");
-$("#nick").val("otavio");
-
-$("#senha").val("plutao");
-$("#confirmer-senha").val("plutao");    
 }

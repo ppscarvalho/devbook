@@ -22,14 +22,14 @@ function fazerLogin(event) {
         window.location.href = "/home";
     }).fail(function(err) {
         console.log(err);
-        alert("Erro ao realizar login!");
+        Mensagem("Erro ao realizar login!", "error");
     });
 }
 
 function CarregarDados() {
 
-//$("#email").val("nazareno@gmail.com");
-$("#email").val("bento@gmail.com");
+$("#email").val("nazareno@gmail.com");
+//$("#email").val("otavio@gmail.com");
 //$("#email").val("gael@gmail.com");
 //$("#email").val("murilo@gmail.com");
 //$("#email").val("oliver@gmail.com");

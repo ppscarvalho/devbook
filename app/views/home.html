@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     {{ template "script" }}
     <script src="/assets/devbook/publicacao.js"></script> <!-- Adicionando o script para validar o formulário -->
+    <script src="/assets/devbook/help.js"></script> <!-- Adicionando o script para validar o formulário -->
 </head>
 
 <body>
@@ -34,7 +35,7 @@
                 </fieldset>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-7">
-                <span class="data-usuario-id">{{ $.IdUsuario }}</span>
+                <span class="data-usuario-id d-none">{{ $.IdUsuario }}</span>
                 {{ range .Publicacoes }}
                 {{ if (eq .AutorId $.IdUsuario) }}
                 {{ template "publicacao-com-permissao" . }}

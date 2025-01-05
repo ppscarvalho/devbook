@@ -17,4 +17,16 @@ var routerUsuarios = []Router{
 		Funcao:             controllers.CadastrarUsuario,
 		RequerAutenticacao: false,
 	},
+	{
+		Uri:                "/buscar-usuarios",
+		Metodo:             http.MethodGet,
+		Funcao:             controllers.CarregarPaginaDeUsuarios,
+		RequerAutenticacao: true,
+	},
+	{
+		Uri:                "/perfil",
+		Metodo:             http.MethodGet,
+		Funcao:             controllers.CarregarPerfilDoUsuarioLogado,
+		RequerAutenticacao: true,
+	},
 }

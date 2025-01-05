@@ -18,23 +18,23 @@ func CadastrarUsuario(w http.ResponseWriter, r *http.Request) {
 	})
 
 	if erro != nil {
-		respostas.JSONInterface(w, http.StatusBadRequest, respostas.ErroApi{Erro: erro.Error()})
+		respostas.JSON(w, http.StatusBadRequest, respostas.ErroApi{Erro: erro.Error()})
 		return
 	}
 
 	response, erro := http.Post(config.EndPoint("usuarios"), "application/json", bytes.NewBuffer(usuario))
 
 	if erro != nil {
-		respostas.JSONInterface(w, http.StatusInternalServerError, respostas.ErroApi{Erro: erro.Error()})
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroApi{Erro: erro.Error()})
 		return
 	}
 
 	defer response.Body.Close()
 
 	if response.StatusCode >= 400 {
-		respostas.Mensagem(w, response)
+		respostas.TratarStatusCodeDeErro(w, response)
 		return
 	}
 
-	respostas.Mensagem(w, response)
+	respostas.JSON(w, response.StatusCode, nil)
 }

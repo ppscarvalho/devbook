@@ -178,7 +178,7 @@ func AtualizarPublicacao(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respostas.JSON(w, http.StatusOK, publicacaoAtualizada)
+	respostas.JSON(w, http.StatusNoContent, nil)
 }
 
 // Implementar deletar uma publicação
@@ -222,7 +222,7 @@ func DeletarPublicacao(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respostas.JSON(w, http.StatusOK, respostas.NewResponse("Publicação deletada com sucesso"))
+	respostas.JSON(w, http.StatusNoContent, nil)
 }
 
 // Implementar buscar publicações por usuário tráz todas as publicações
@@ -254,11 +254,11 @@ func BuscarPublicacoesPorUsuario(w http.ResponseWriter, r *http.Request) {
 
 // Implementar curtir uma publicação
 func CustirPublicacao(w http.ResponseWriter, r *http.Request) {
-	idUsuario, erro := auth.ExtractUserId(r)
-	if erro != nil {
-		respostas.Erro(w, http.StatusUnauthorized, erro)
-		return
-	}
+	// idUsuario, erro := auth.ExtractUserId(r)
+	// if erro != nil {
+	// 	respostas.Erro(w, http.StatusUnauthorized, erro)
+	// 	return
+	// }
 
 	params := mux.Vars(r)
 
@@ -288,26 +288,26 @@ func CustirPublicacao(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if publicacao.AutorId == idUsuario {
-		respostas.Erro(w, http.StatusForbidden, respostas.MsgError("Usuário não pode curtir sua própria publicação."))
-		return
-	}
+	// if publicacao.AutorId == idUsuario {
+	// 	respostas.Erro(w, http.StatusForbidden, respostas.MsgError("Usuário não pode curtir sua própria publicação."))
+	// 	return
+	// }
 
 	if erro = rep.Curtir(idPublicacao); erro != nil {
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return
 	}
 
-	respostas.JSON(w, http.StatusOK, respostas.NewResponse("Publicação curtida com sucesso."))
+	respostas.JSON(w, http.StatusNoContent, nil)
 }
 
 // Implementar descurtir uma publicação
 func DesCustirPublicacao(w http.ResponseWriter, r *http.Request) {
-	idUsuario, erro := auth.ExtractUserId(r)
-	if erro != nil {
-		respostas.Erro(w, http.StatusUnauthorized, erro)
-		return
-	}
+	// idUsuario, erro := auth.ExtractUserId(r)
+	// if erro != nil {
+	// 	respostas.Erro(w, http.StatusUnauthorized, erro)
+	// 	return
+	// }
 
 	params := mux.Vars(r)
 
@@ -332,10 +332,10 @@ func DesCustirPublicacao(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if publicacao.AutorId == idUsuario {
-		respostas.Erro(w, http.StatusForbidden, respostas.MsgError("Usuário não pode descurtir sua própria publicação."))
-		return
-	}
+	// if publicacao.AutorId == idUsuario {
+	// 	respostas.Erro(w, http.StatusForbidden, respostas.MsgError("Usuário não pode descurtir sua própria publicação."))
+	// 	return
+	// }
 
 	if respostas.IsEmptyStruct(publicacao) {
 		respostas.Erro(w, http.StatusForbidden, respostas.MsgError("Publicação não encontrada."))
@@ -347,5 +347,5 @@ func DesCustirPublicacao(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respostas.JSON(w, http.StatusOK, respostas.NewResponse("Publicação descurtida com sucesso."))
+	respostas.JSON(w, http.StatusNoContent, nil)
 }

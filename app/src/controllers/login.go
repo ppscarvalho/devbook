@@ -26,7 +26,7 @@ func FazerLogin(w http.ResponseWriter, r *http.Request) {
 	response, erro := http.Post(config.EndPoint("login"), "application/json", bytes.NewBuffer(usuario))
 
 	if erro != nil {
-		respostas.JSONInterface(w, http.StatusInternalServerError, respostas.ErroApi{Erro: erro.Error()})
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroApi{Erro: erro.Error()})
 		return
 	}
 
@@ -39,14 +39,14 @@ func FazerLogin(w http.ResponseWriter, r *http.Request) {
 
 	var dadosAutenticacao models.DadosAutenticacao
 	if erro = json.NewDecoder(response.Body).Decode(&dadosAutenticacao); erro != nil {
-		respostas.JSONInterface(w, http.StatusUnprocessableEntity, respostas.ErroApi{Erro: erro.Error()})
+		respostas.JSON(w, http.StatusUnprocessableEntity, respostas.ErroApi{Erro: erro.Error()})
 		return
 	}
 
 	if erro = cookies.Salvar(w, dadosAutenticacao.Id, dadosAutenticacao.Token); erro != nil {
-		respostas.JSONInterface(w, http.StatusInternalServerError, respostas.ErroApi{Erro: erro.Error()})
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroApi{Erro: erro.Error()})
 		return
 	}
 
-	respostas.JSONInterface(w, response.StatusCode, response.Body)
+	respostas.JSON(w, response.StatusCode, nil)
 }

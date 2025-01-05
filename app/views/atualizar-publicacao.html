@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevBook - Editar Publicação - {{ .Titulo }}</title>
+    <title>DevBook - atualizar Publicação - {{ .Titulo }}</title>
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     {{ template "script" }}
+    <script src="/assets/devbook/publicacao.js"></script> <!-- Adicionando o script para validar o formulário -->
+    <script src="/assets/devbook/help.js"></script> <!-- Adicionando o script para validar o formulário -->
 </head>
 
 <body>
@@ -19,7 +21,7 @@
                 <h3>Atualizar Publicação</h3>
                 <fieldset>
                     <form id="atualizar-publicacao" method="put" enctype="application/x-www-form-urlencoded">
-                        <div class="form-group">
+                        <div class="form-group d-none">
                             <label for="id">Id</label>
                             <input type="text" class="form-control" id="id" value="{{ .Id }}" required>
                         </div>
@@ -33,7 +35,7 @@
                             <textarea class="form-control resize-none" name="conteudo" id="conteudo" rows="3"
                                 placeholder="Digite o conteudo" required>{{ .Conteudo }}</textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Atulizar Publicação</button>
+                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                     </form>
                 </fieldset>
             </div>

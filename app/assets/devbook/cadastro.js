@@ -12,7 +12,7 @@ function CriarUsuario(event) {
     var confirmerSenha = $("#confirmer-senha").val();
 
     if (senha != confirmerSenha) {
-        alert("Senhas diferentes!");
+        Mensagem("Senhas não coincidem!", "error");
         return;
     }
 
@@ -34,10 +34,26 @@ function CriarUsuario(event) {
         }
     }).done(function(data) {
         console.log(data);
-        alert("Cadastro realizado com sucesso!");
+        Swal.fire("Atenção!", "Cadastro realizado com sucesso!", "success")
+        .then(function() {
+            $.ajax({
+                url: "/login",
+                method: "POST",
+                data: {
+                    email: usuario.email,
+                    senha: usuario.senha
+                }
+            }).done(function() {
+                window.location.href = "/home";
+            }).fail(function(err) {
+                console.log(err);
+                Mensagem("Erro ao realizar login!", "error");
+            });
+        });
+
     }).fail(function(err) {
         console.log(err);
-        alert("Erro ao realizar cadastro!");
+        Mensagem("Erro ao realizar cadastro!", "error");
     });
 }
 
@@ -64,10 +80,11 @@ $("#email").val("murilo@gmail.com");
 $("#nick").val("murilo");
 */
 
+/*
 $("#nome").val("Oliver Lucca Lopes");
 $("#email").val("oliver@gmail.com");
 $("#nick").val("oliver");
-
+*/
 /*
 $("#nome").val("João da Silva");
 $("#email").val("joao@gmail.com");
@@ -79,6 +96,17 @@ $("#nome").val("Augusto Ferreira Nunes");
 $("#email").val("augusto@gmail.com");
 $("#nick").val("augusto");
 */
+
+/*
+$("#nome").val("Carlos Pereira");
+$("#email").val("carlos@gmail.com");
+$("#nick").val("carlos");
+*/
+
+$("#nome").val("Otávio de Souza");
+$("#email").val("otavio@gmail.com");
+$("#nick").val("otavio");
+
 $("#senha").val("plutao");
 $("#confirmer-senha").val("plutao");    
 }

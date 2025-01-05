@@ -25,9 +25,21 @@ var routerPublicacoes = []Router{
 		RequerAutenticacao: true,
 	},
 	{
-		Uri:                "/publicacoes/{idPublicacao}/editar",
+		Uri:                "/publicacoes/{idPublicacao}/atualizar",
 		Metodo:             http.MethodGet,
 		Funcao:             controllers.CarregarPaginaDeEdicaoPublicacao,
+		RequerAutenticacao: true,
+	},
+	{
+		Uri:                "/publicacoes/{idPublicacao}",
+		Metodo:             http.MethodPut,
+		Funcao:             controllers.AtualizarPublicacao,
+		RequerAutenticacao: true,
+	},
+	{
+		Uri:                "/publicacoes/{idPublicacao}",
+		Metodo:             http.MethodDelete,
+		Funcao:             controllers.DeletarPublicacao,
 		RequerAutenticacao: true,
 	},
 }

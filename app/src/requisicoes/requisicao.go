@@ -23,5 +23,6 @@ func FazerRequisicaoComAutenticacao(r *http.Request, metodo, url string, dados i
 	if erro != nil {
 		return nil, erro
 	}
+
 	return response, nil
 }

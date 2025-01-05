@@ -1,8 +1,10 @@
 $(document).ready(function () {
-    CarregarPublicacao();
     $("#nova-publicacao").on('submit', CriarPublicacao);
     $(document).on('click', '.curtir-publicacao', CurtirPublicacao);
     $(document).on('click', '.descurtiu-publicacao', DesCurtirPublicacao);
+
+    $("#atualizar-publicacao").on('submit', AtualizarPublicacao);
+    $(".deletar-publicacao").on('click', DeletarPublicacao);
 });
 
 function CriarPublicacao(event) {
@@ -23,24 +25,24 @@ function CriarPublicacao(event) {
             conteudo: publicacao.conteudo,
         }
     }).done(function() {
-        window.location.href = "/home";
+        Swal.fire({
+            icon: 'success',
+            title: 'Publicação cadastrada com sucesso!',
+            showCancelButton: false,
+        }).then((result) => {
+            if (!result.value) return;
+            window.location.href = "/home";
+        });
+
     }).fail(function(err) {
         console.log(err);
-        alert("Erro ao cadastrar publicação!");
+        Mensagem("Erro ao cadastrar publicação!", "error"); 
     });
 }
 function CurtirPublicacao(event) {
     event.preventDefault();
     const elementoClicado = $(event.target);
     const publicacaoId = elementoClicado.closest('div').data("publicacao-id");
-    const autorIdClicado = elementoClicado.closest("div").find(".autorId").attr("id"); 
-    const autorId = parseInt(autorIdClicado)
-    const usuarioId = $(".data-usuario-id").text();
-
-    if (parseInt(autorId) === parseInt(usuarioId)) {
-        alert("Você pode curtir suas própria publicação!");
-        return;
-    }
    
     elementoClicado.prop("disabled", true);
 
@@ -57,7 +59,7 @@ function CurtirPublicacao(event) {
         elementoClicado.removeClass('curtir-publicacao');
     }).fail(function(err) {
         console.log(err);
-        alert("Erro ao curtir publicação!");
+          Mensagem("Erro ao curtir publicação!", "error"); 
     }).always(function() {
         elementoClicado.prop("disabled", false);
     });
@@ -82,13 +84,80 @@ function DesCurtirPublicacao(event) {
         elementoClicado.addClass('curtir-publicacao');
     }).fail(function(err) {
         console.log(err);
-        alert("Erro ao curtir publicação!");
+        Mensagem("Erro ao descurtir publicação!", "error"); 
     }).always(function() {
         elementoClicado.prop("disabled", false);
     });
 }
 
-function CarregarPublicacao() {
-$("#titulo").val("Algumas características da Golang incluem");
-$("#conteudo").val("A Golang é usada por empresas e startups como a Netflix, Dropbox, Uber, Imgur e SpaceX");    
+function AtualizarPublicacao(event) {
+    event.preventDefault();
+    $("#atualizar-publicacao").prop("disabled", true);
+
+    var id = $("#id").val();
+    var titulo = $("#titulo").val();
+    var conteudo = $("#conteudo").val();
+
+    var publicacao = {
+        id: id,
+        titulo: titulo,
+        conteudo: conteudo,
+    };
+
+    $.ajax({
+        url: `/publicacoes/${id}`,
+        method: "PUT",
+        data: {
+            id: publicacao.id,
+            titulo: publicacao.titulo,
+            conteudo: publicacao.conteudo,
+        }
+    }).done(function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Publicação atualizada com sucesso!',
+            showCancelButton: false,
+        }).then((result) => {
+            if (!result.value) return;
+            window.location.href = "/home";
+        });
+    }).fail(function(err) {
+        console.log(err);
+         Mensagem("Erro ao atualizaar publicação!", "error"); 
+    }).always(function() {
+        $("#atualizar-publicacao").prop("disabled", false);
+    });
+}
+
+function DeletarPublicacao(event) {
+    event.preventDefault();
+
+    Swal.fire({
+        title: "Atenção!",
+        text: "Tem certeza que deseja excluir essa publicação? Essa ação é irreversível!",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        icon: "warning"
+      }).then(function(confirmacao) {
+        if (!confirmacao.value) return;
+
+        const elementoClicado = $(event.target);
+        const publicacao = elementoClicado.closest('div')
+        const publicacaoId = publicacao.data("publicacao-id");
+        elementoClicado.prop("disabled", true);
+    
+        $.ajax({
+            url: `/publicacoes/${publicacaoId}`,
+            method: "DELETE"
+        }).done(function() {
+            publicacao.fadeOut("slow", function() {
+                publicacao.remove();
+            });
+        }).fail(function(err) {
+            console.log(err);
+            Mensagem("Erro ao excluir a publicação!", "error");
+        }).always(function() {
+            elementoClicado.prop("disabled", false);
+        });        
+      });
 }
